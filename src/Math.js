@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import ReactDOM from 'react-dom'
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+//Style definitions for number fields
 var numberFieldStyling= {
   width: '20%',
   padding: '12px 20px',
@@ -14,7 +15,7 @@ var numberFieldStyling= {
   display: 'inherit',
   marginLeft: '40%',
 }
-
+//Style definitions for button fields
 var buttonStyling={
   
     width: '10%',
@@ -35,6 +36,7 @@ class Math extends Component {
   
   constructor(props) {
     super(props);
+    //initial state definitions for first operator, second operator and the result
     this.state = {value1: '',
                   value2: '',
                   result :''};
@@ -45,21 +47,24 @@ class Math extends Component {
     this.handleMultiplication = this.handleMultiplication.bind(this);
     this.handleDivision = this.handleDivision.bind(this);
   }
+  // updating state on each field change
   handleChangeFirstInput(event) {
     this.setState({value1: event.target.value});
   }
   handleChangeSecondInput(event) {
     this.setState({value2: event.target.value});
   }
+  // method implementations
   handleAddition(){
     let params = {
       "value1": this.state.value1,
       "value2": this.state.value2
     }
-    
+    // passing the operands over as query parameters to the API
     let query = Object.keys(params)
                  .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
                  .join('&');
+    // API call to the respective route to handle the operation             
     fetch('https://mysterious-waters-43598.herokuapp.com/add?' + query)
       .then(response => response.json())
       .then(data => this.setState({result:data.result}))
@@ -69,10 +74,11 @@ class Math extends Component {
       "value1": this.state.value1,
       "value2": this.state.value2
     }
-    
+    // passing the operands over as query parameters to the API
     let query = Object.keys(params)
                  .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
                  .join('&');
+    // API call to the respective route to handle the operation
     fetch('https://mysterious-waters-43598.herokuapp.com/sub?' + query)
       .then(response => response.json())
       .then(data => this.setState({result:data.result}))
@@ -83,10 +89,11 @@ class Math extends Component {
       "value2": this.state.value2
       
     }
-    
+    // passing the operands over as query parameters to the API
     let query = Object.keys(params)
                  .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
                  .join('&');
+    // API call to the respective route to handle the operation             
     fetch('https://mysterious-waters-43598.herokuapp.com/mul?' + query)
       .then(response => response.json())
       .then(data => this.setState({result:data.result}))
@@ -96,18 +103,22 @@ class Math extends Component {
       "value1": this.state.value1,
       "value2": this.state.value2
     }
+    // Checking for divide by zero condition
     if(this.state.value2=='0')
     alert('Please make sure you enter valid numbers')
     else
     {
+      // passing the operands over as query parameters to the API
     let query = Object.keys(params)
                  .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
                  .join('&');
+    // API call to the respective route to handle the operation             
     fetch('https://mysterious-waters-43598.herokuapp.com/div?' + query)
       .then(response => response.json())
       .then(data =>this.setState({result:data.result})) 
     }
   }
+  // rendering the results from updated state
   render() {
     return (
       <div className="Math">

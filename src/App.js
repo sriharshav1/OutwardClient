@@ -3,11 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import ReactDOM from 'react-dom'
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import Particles from 'react-particles-js';
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {result :''};
+ // Storing current user's visits into his local browser storage and updating it as required   
     if (typeof(Storage) !== "undefined") {
       if (localStorage.clickcount) {
         localStorage.clickcount = Number(localStorage.clickcount)+1;
@@ -16,12 +16,14 @@ class App extends Component {
       }
  }
 }
+// Getting list of all users visited in the component did mount , so that all the users for the application will be displayed
 componentDidMount() {
   fetch('https://mysterious-waters-43598.herokuapp.com/')
   .then(response => response.json())
   .then(data =>this.setState({result:data.result})) 
 }
-  
+ //Fetching and rendering the current user visit count from local browser
+ //Fetching the total visit count from the updated state 
   render() {
     return (
       <div className="App" >
